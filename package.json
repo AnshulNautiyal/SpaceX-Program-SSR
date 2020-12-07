@@ -2,7 +2,7 @@
   "name": "spaceXlaunch",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "src/server/server.js",
   "scripts": {
     "start": "npm-run-all --parallel dev:*",
     "dev:start-server": "nodemon --watch build --exec node build/server-build.js",
