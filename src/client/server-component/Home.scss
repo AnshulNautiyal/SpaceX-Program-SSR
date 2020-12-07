@@ -65,7 +65,7 @@ body {
           justify-content: space-between;
           align-items: center;
           & > div {
-            width: 62px;
+            width: 85px;
             height: 30px;
             background-color: #c5e09b;
             margin: 10px;
@@ -74,6 +74,9 @@ body {
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            &:hover {
+                background-color: #79ac28;
+            }
           }
           @media only screen and (min-width: 300px) and (max-width: 500px){
             & > div { 
