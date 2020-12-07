@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { withRouter } from "react-router";
-import 'lazysizes';
+import "lazysizes";
 import "./Home.scss";
 
 function Home(props) {
@@ -101,22 +101,29 @@ function Home(props) {
         launch_year = "",
         mission_name = "",
         launch_success = "",
-        land_success = "",
         flight_number = "",
         mission_id = [],
         links: { mission_patch = "", mission_patch_small = "" } = {},
+        rocket: { first_stage: { cores = [] } = {} } = {},
       } = item;
 
       return (
         <div className="launchCard">
           <div className="launchImage">
             <picture>
-              <source media="(min-width:300px && max-width:900px)" srcSet={mission_patch_small} />
+              <source
+                media="(min-width:300px && max-width:900px)"
+                srcSet={mission_patch_small}
+              />
               <source
                 media="(min-width:900px && max-width:1200px)"
                 srcSet={mission_patch}
               />
-              <img data-src={mission_patch_small} alt="Space X" className="lazyload" />
+              <img
+                data-src={mission_patch_small}
+                alt="Space X"
+                className="lazyload"
+              />
             </picture>
           </div>
           <div className="launchName">
@@ -124,18 +131,25 @@ function Home(props) {
           </div>
           <div className="missionID">
             <span>Mission Ids:</span>{" "}
-            {mission_id.map((item) => (
-              <span key={item}>{item}, </span>
-            ))}
+            {mission_id.length
+              ? mission_id.map((item) => <span key={item}>{item}, </span>)
+              : "Not Available"}
           </div>
           <div className="year">
             <span>Launch Year:</span> {launch_year}
           </div>
           <div className="success">
-            <span>Successful Launch:</span> {launch_success}
+            <span>Successful Launch:</span> {launch_success ? "true" : "false"}
           </div>
           <div className="fail">
-            <span>Successful Landing:</span> {land_success}
+            <span>Successful Landing:</span>{" "}
+            {cores.length
+              ? cores[0].land_success
+                ? "true"
+                : cores[0].land_success === false
+                ? "false"
+                : "Not Available"
+              : "Not Available"}
           </div>
         </div>
       );
