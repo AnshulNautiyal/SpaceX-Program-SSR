@@ -1,0 +1,141 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap");
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Nunito", sans-serif;
+}
+.container {
+  background-color: #f2f2f2;
+  max-width: 1200px;
+  margin: auto;
+  height: 100%;
+
+  &__header {
+    padding-left: 16px;
+    padding-top: 16px;
+    margin-bottom: 16px;
+  }
+  @media only screen and (min-width: 300px) and (max-width: 500px) {
+    &__programs {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+  &__programs {
+    display: flex;
+    
+    & > div {
+      border-radius: 10px;
+    }
+    
+    &--filters {
+      background-color: white;
+      min-width: 250px;
+      max-width: 250px;
+      margin: 0 16px;
+      margin-bottom: 20px;
+      max-height: 750px;
+      padding: 16px;
+      box-shadow: 0 1px 4px 0 rgba(32, 32, 32, 0.1);
+      & > h2 {
+        margin: 0;
+        margin-bottom: 10px;
+      }
+      .filter {
+        margin-bottom: 20px;
+        &__header {
+          text-align: center;
+          border-bottom: 1px solid rgb(190, 190, 190);
+          margin: 0 30px;
+          margin-bottom: 10px;
+        }
+        &__value {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          align-items: center;
+          & > div {
+            width: 62px;
+            height: 30px;
+            background-color: #c5e09b;
+            margin: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+          }
+          @media only screen and (min-width: 300px) and (max-width: 500px){
+            & > div { 
+                width:98px;
+            }
+          }
+        }
+      }
+    }
+    @media only screen and (min-width: 300px) and (max-width: 500px) {
+        &--filters {
+            min-width: unset;
+            max-width: unset;
+        }
+      }
+    &--name {
+      margin-right: 16px;
+      flex-grow: 1;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 16px;
+      padding-top: 0;
+      padding-right: 0;
+      .launchCard {
+        background-color: white;
+        border-radius: 4px;
+        margin-right: 16px;
+        margin-bottom: 16px;
+        width: 275px;
+        // height: 400px;
+        padding: 10px;
+        box-shadow: 0 1px 4px 0 rgba(32, 32, 32, 0.1);
+        & > div {
+          margin-bottom: 10px;
+          & > span {
+            font-weight: bold;
+            color: black;
+          }
+          color: #464e8e;
+        }
+        .launchName {
+          font-weight: bold;
+        }
+        .launchImage {
+          width: 256px;
+          height: 256px;
+          background-color: #f2f2f2;
+          img {
+            width: 256px;
+            height: 256px;
+          }
+          margin-bottom: 10px;
+        }
+      }
+    }
+    @media only screen and (min-width: 300px) and (max-width: 500px) {
+        &--name {
+           justify-content: center;
+           .launchCard { 
+               width: unset;
+               margin-right: unset;
+           }
+
+        }
+      }
+  }
+  .developBy {
+    text-align: center;
+  }
+}
