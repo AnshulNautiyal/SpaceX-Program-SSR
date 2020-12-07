@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
       res.send(Home(json, req));
     });
 });
-
-app.listen(3000, (req, res) => {
+const port = process.env.PORT || 3000;
+app.listen(port, (req, res) => {
   console.log("Server  is  running on  port 3000");
 });
