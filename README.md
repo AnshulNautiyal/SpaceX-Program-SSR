@@ -32,3 +32,12 @@ Mobile:
 Tab:
 ![Tab view:](src/images/tab.png)
 
+LightHouseScore:
+![LightHouseScore:](src/images/light.png)
+
+
+
+Lighthouse performance score can be more than 90 by doing this:
+1.  Images in api response  should have WebP and other format rather than JPEG and PNG.
+2.  Images is using http1.1 protocol. Http2 is better for it.
+
