@@ -22,17 +22,17 @@ Page is different Layout for Mobile, Tab and Desktop.
 
 Web app is hosted in Heroku and it  is connected to github. So every commit in main branch will trigger the deployment automatically.
 
-Desktop:
+### Desktop:
 
 ![Desktop view:](src/images/desktop.png)
 
-Mobile:
+### Mobile:
 ![Mobile view:](src/images/mobile.png)
 
-Tab:
+### Tab:
 ![Tab view:](src/images/tab.png)
 
-LightHouseScore:
+### LightHouseScore:
 ![LightHouseScore:](src/images/light.png)
 
 
