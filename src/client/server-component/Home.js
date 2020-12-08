@@ -3,6 +3,7 @@ import React from "react";
 import { withRouter } from "react-router";
 import "lazysizes";
 import "./Home.scss";
+import queryString from "query-string";
 
 function Home(props) {
   const { data = [] } = props;
@@ -82,15 +83,33 @@ function Home(props) {
     } else {
       arrayItem = [...initialValue];
     }
+    let qs = queryString.parse(props.location.search);
+    let year = qs.launch_year || "";
+    let launch = qs.launch_success || "";
+    let landing = qs.land_success || "";
     return (
       <div className="filter">
         <div className="filter__header">{filterName}</div>
         <div className="filter__value">
-          {arrayItem.map((item) => (
-            <div key={item} onClick={applyFilter(item, filterName)}>
-              {item}
-            </div>
-          ))}
+          {arrayItem.map((item) => {
+            let addClass = "";
+            if (filterName === "Launch Year") {
+              addClass = year === item.toString() ? "filterSelected" : "";
+            } else if (filterName === "Successful Launch") {
+              addClass = launch === item.toString().toLowerCase() ? "filterSelected" : "";
+            } else {
+              addClass = landing === item.toString().toLowerCase() ? "filterSelected" : "";
+            }
+            return (
+              <div
+                key={item}
+                className={addClass}
+                onClick={applyFilter(item, filterName)}
+              >
+                {item}
+              </div>
+            );
+          })}
         </div>
       </div>
     );

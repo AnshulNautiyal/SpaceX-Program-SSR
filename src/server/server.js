@@ -1,8 +1,10 @@
 import express from "express";
 import fetch from "node-fetch";
+import compress from 'compression';
 import Home from "./serverRender";
 
 const app = express();
+app.use(compress());
 app.use(express.static("build"));
 app.get("/", (req, res) => {
   const {
@@ -25,7 +27,7 @@ app.get("/", (req, res) => {
   fetch(apiEndPoint)
     .then((res) => res.json())
     .then((json) => {
-      res.set('Cache-Control', 'public, max-age=31557600, s-maxage=31557600'); 
+      res.set("Cache-Control", "public, max-age=31557600, s-maxage=31557600");
       res.send(Home(json, req));
     });
 });
