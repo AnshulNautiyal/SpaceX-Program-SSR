@@ -118,13 +118,13 @@ function Home(props) {
               addClass = landing === item.toString().toLowerCase() ? "filterSelected" : "";
             }
             return (
-              <div
+              <button
                 key={item}
                 className={addClass}
                 onClick={applyFilter(item, filterName)}
               >
                 {item}
-              </div>
+              </button>
             );
           })}
         </div>
