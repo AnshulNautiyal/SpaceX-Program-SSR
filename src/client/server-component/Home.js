@@ -63,7 +63,7 @@ function Home(props) {
           console.log("fail");
         });
     } else {
-      props.history.push(`&land_success=${item}`);
+      // props.history.push(`&land_success=${item}`);
       searchParams.set("land_success", item === "True" ? true : false);
       props.history.push({
         pathname: pathname,
@@ -144,7 +144,7 @@ function Home(props) {
       } = item;
 
       return (
-        <div className="launchCard">
+        <div className="launchCard" key={index}>
           <div className="launchImage">
             <picture>
               <source

@@ -5,8 +5,8 @@ import Home from "../client/server-component/Home";
 
 export default (json, req) => {
   const homeComponent = renderToString(
-    <StaticRouter context={{}} location={req.path}>
-      <Route exact path="/" render={() => <Home data={json} />} />
+    <StaticRouter context={{}} location={req.url}>
+      <Route exact path="/" render={() => <Home data={json} loc={req.url}/>} />
     </StaticRouter>
   );
   return `

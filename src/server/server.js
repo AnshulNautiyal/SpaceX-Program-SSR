@@ -12,7 +12,6 @@ app.get("/", (req, res) => {
     launch_success = "",
     land_success = "",
   } = req.query;
-  console.log(req.query)
 
   let apiEndPoint = "https://api.spacexdata.com/v3/launches?limit=100";
 
