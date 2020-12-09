@@ -12,6 +12,7 @@ app.get("/", (req, res) => {
     launch_success = "",
     land_success = "",
   } = req.query;
+  console.log(req.query)
 
   let apiEndPoint = "https://api.spacexdata.com/v3/launches?limit=100";
 
@@ -19,10 +20,10 @@ app.get("/", (req, res) => {
     apiEndPoint = `${apiEndPoint}&launch_year=${launch_year}`;
   }
   if (launch_success) {
-    apiEndPoint = `${apiEndPoint}&launch_success=${launch_success}`;
+    apiEndPoint = `${apiEndPoint}&launch_success=${launch_success.toLowerCase()}`;
   }
   if (land_success) {
-    apiEndPoint = `${apiEndPoint}&land_success=${land_success}`;
+    apiEndPoint = `${apiEndPoint}&land_success=${land_success.toLowerCase()}`;
   }
   fetch(apiEndPoint)
     .then((res) => res.json())

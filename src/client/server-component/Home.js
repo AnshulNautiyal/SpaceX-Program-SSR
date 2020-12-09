@@ -25,6 +25,8 @@ function Home(props) {
         .get(`/`, {
           params: {
             launch_year: item,
+            launch_success: searchParams.get('launch_success'),
+            land_success: searchParams.get('land_success'),
           },
           headers: {'Content-Type': 'application/json'},
           data: { }
@@ -46,7 +48,9 @@ function Home(props) {
       axios
         .get(`/`, {
           params: {
+            launch_year: searchParams.get('launch_year'),
             launch_success: item,
+            land_success: searchParams.get('land_success'),
           },
           headers: {'Content-Type': 'application/json'},
           data: { }
@@ -68,6 +72,8 @@ function Home(props) {
       axios
         .get(`/`, {
           params: {
+            launch_year: searchParams.get('launch_year'),
+            launch_success: searchParams.get('launch_success'),
             land_success: item,
           },
           headers: {'Content-Type': 'application/json'},
@@ -126,7 +132,7 @@ function Home(props) {
     );
   };
   const getLaunchRecord = () =>
-  state.map((item, index) => {
+  state.length && state.map((item, index) => {
       const {
         launch_year = "",
         mission_name = "",
@@ -184,6 +190,8 @@ function Home(props) {
         </div>
       );
     });
+
+    const spaceXPrograms = getLaunchRecord();
   return (
     <div className="container">
       <h1 className="container__header">SpaceX Launch Programs</h1>
@@ -194,7 +202,7 @@ function Home(props) {
           {getFilterType("Successful Launch", ["True", "False"])}
           {getFilterType("Successful Landing", ["True", "False"])}
         </div>
-        <div className="container__programs--name">{getLaunchRecord()}</div>
+        <div className="container__programs--name">{spaceXPrograms ? spaceXPrograms : 'Data Not Available'}</div>
       </div>
       <h1 className="developBy">
         Developed By:{" "}
