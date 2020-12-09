@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, {useState} from "react";
 import { withRouter } from "react-router";
 import "lazysizes";
 import "./Home.scss";
@@ -7,6 +7,7 @@ import queryString from "query-string";
 
 function Home(props) {
   const { data = [] } = props;
+  const [state, setstate] = useState(data);
 
   const applyFilter = (item, filterName) => () => {
     let searchParams = new URLSearchParams(location.search);
@@ -25,12 +26,15 @@ function Home(props) {
           params: {
             launch_year: item,
           },
+          headers: {'Content-Type': 'application/json'},
+          data: { }
         })
         .then((res) => {
-          console.log("sccess");
+          console.log("sccess",res);
+          setstate(res.data);
         })
         .catch(() => {
-          console.log("fail");
+          console.log("fails");
         });
     } else if (filterName === "Successful Launch") {
       //   props.history.push(`?launch_success=${item}`);
@@ -44,9 +48,12 @@ function Home(props) {
           params: {
             launch_success: item,
           },
+          headers: {'Content-Type': 'application/json'},
+          data: { }
         })
         .then((res) => {
-          console.log("sccess");
+          console.log("sccess",res);
+          setstate(res.data);
         })
         .catch(() => {
           console.log("fail");
@@ -63,9 +70,13 @@ function Home(props) {
           params: {
             land_success: item,
           },
+          headers: {'Content-Type': 'application/json'},
+          data: { }
+          
         })
         .then((res) => {
           console.log("sccess");
+          setstate(res.data);
         })
         .catch(() => {
           console.log("fail");
@@ -115,7 +126,7 @@ function Home(props) {
     );
   };
   const getLaunchRecord = () =>
-    data.map((item, index) => {
+  state.map((item, index) => {
       const {
         launch_year = "",
         mission_name = "",

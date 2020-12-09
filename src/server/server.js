@@ -28,7 +28,13 @@ app.get("/", (req, res) => {
     .then((res) => res.json())
     .then((json) => {
       res.set("Cache-Control", "public, max-age=31557600, s-maxage=31557600");
-      res.send(Home(json, req));
+      if(req.headers['content-type'] !== 'application/json'){
+        res.send(Home(json, req));
+      }else {
+        res.send(json);
+      }
+    }).catch(() =>{
+      console.log('Ops Something went wrong')
     });
 });
 const port = process.env.PORT || 3000;
