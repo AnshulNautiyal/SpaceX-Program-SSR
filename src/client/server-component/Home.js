@@ -13,6 +13,7 @@ function Home(props) {
   const updateState = (data) => {
     setIsLoading(false);
     setstate(data);
+    document.body.style.overflow = "auto";
   };
   const applyFilter = (filterName) => (event) => {
     let searchParams = new URLSearchParams(location.search);
@@ -25,6 +26,7 @@ function Home(props) {
     const launchTwiceClick = searchParams.get("launch_success", item);
     const landTwiceClick = searchParams.get("land_success", item);
     setIsLoading(true);
+    document.body.style.overflow = "hidden";
     if (
       item === yearTwiceClick ||
       (item.toLowerCase() === launchTwiceClick &&
@@ -111,7 +113,7 @@ function Home(props) {
       <div className="filter">
         <div className="filter__header">{filterName}</div>
         <div className="filter__value" onClick={applyFilter(filterName)}>
-          {arrayItem.map((item) => {
+          {arrayItem.length && arrayItem.map((item) => {
             let addClass = "";
             if (filterName === "Launch Year") {
               addClass = year === item.toString() ? "filterSelected" : "";
