@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export default function getFilterData(params, setstate) {
-  debugger;
   axios
     .get(`/`, {
       params,
