@@ -30,10 +30,10 @@ function Home(props) {
     if (
       item === yearTwiceClick ||
       (item.toLowerCase() === launchTwiceClick &&
-        filterName === "Successful Launch") ||
+      filterName === "Successful Launch") ||
       (item.toLowerCase() === landTwiceClick &&
-        filterName === "Successful Landing")
-    ) {
+      filterName === "Successful Landing")
+      ) {
       const filterButton = document.getElementById(`${item}${filterName}`);
       filterButton.classList.remove("filterSelected");
 
@@ -145,7 +145,7 @@ function Home(props) {
   };
 
   const getLaunchRecord = () =>
-    state.length &&
+  Array.isArray(state) &&
     state.map((item, index) => {
       const {
         launch_year = "",
