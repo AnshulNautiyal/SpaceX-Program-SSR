@@ -9,9 +9,11 @@ function Home(props) {
   const { data = [] } = props;
   const [state, setstate] = useState(data);
 
-  const applyFilter = (item, filterName) => () => {
+  const applyFilter = (filterName) => (event) => {
     let searchParams = new URLSearchParams(location.search);
     let pathname = location.pathname;
+    const { value:item = '' } = event.target;
+    if(!item) return;
 
     if (filterName === "Launch Year") {
       searchParams.set("launch_year", item);
@@ -70,7 +72,7 @@ function Home(props) {
     return (
       <div className="filter">
         <div className="filter__header">{filterName}</div>
-        <div className="filter__value">
+        <div className="filter__value" onClick={applyFilter(filterName)}>
           {arrayItem.map((item) => {
             let addClass = "";
             if (filterName === "Launch Year") {
@@ -89,8 +91,8 @@ function Home(props) {
             return (
               <button
                 key={item}
+                value={item}
                 className={addClass}
-                onClick={applyFilter(item, filterName)}
               >
                 {item}
               </button>
