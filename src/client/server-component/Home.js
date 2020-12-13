@@ -8,7 +8,12 @@ import getFilterData from "./api-call";
 function Home(props) {
   const { data = [] } = props;
   const [state, setstate] = useState(data);
+  const [isLoading, setIsLoading] = useState(false);
 
+  const updateState = (data) => {
+    setIsLoading(false);
+    setstate(data);
+  };
   const applyFilter = (filterName) => (event) => {
     let searchParams = new URLSearchParams(location.search);
     let pathname = location.pathname;
@@ -19,7 +24,7 @@ function Home(props) {
     const yearTwiceClick = searchParams.get("launch_year", item);
     const launchTwiceClick = searchParams.get("launch_success", item);
     const landTwiceClick = searchParams.get("land_success", item);
-    
+    setIsLoading(true);
     if (
       item === yearTwiceClick ||
       (item.toLowerCase() === launchTwiceClick &&
@@ -29,12 +34,14 @@ function Home(props) {
     ) {
       const filterButton = document.getElementById(`${item}${filterName}`);
       filterButton.classList.remove("filterSelected");
-      
-      if(filterName === "Successful Launch") searchParams.delete('launch_success');
-      else  if(filterName === "Successful Landing") searchParams.delete('land_success');
-      else searchParams.delete('launch_year');
 
-      history.replaceState(null, '', '?' + searchParams + location.hash);
+      if (filterName === "Successful Launch")
+        searchParams.delete("launch_success");
+      else if (filterName === "Successful Landing")
+        searchParams.delete("land_success");
+      else searchParams.delete("launch_year");
+
+      history.replaceState(null, "", "?" + searchParams + location.hash);
 
       const params = {
         launch_year: searchParams.get("launch_year"),
@@ -42,7 +49,7 @@ function Home(props) {
         land_success: searchParams.get("land_success"),
       };
 
-      getFilterData(params, setstate);
+      getFilterData(params, updateState);
       return;
     }
     // NOTE: Happy Path - filter is selected
@@ -57,7 +64,7 @@ function Home(props) {
         launch_success: searchParams.get("launch_success"),
         land_success: searchParams.get("land_success"),
       };
-      getFilterData(params, setstate);
+      getFilterData(params, updateState);
     } else if (filterName === "Successful Launch") {
       searchParams.set("launch_success", item === "True" ? true : false);
       props.history.push({
@@ -69,7 +76,7 @@ function Home(props) {
         launch_success: item,
         land_success: searchParams.get("land_success"),
       };
-      getFilterData(params, setstate);
+      getFilterData(params, updateState);
     } else {
       searchParams.set("land_success", item === "True" ? true : false);
       props.history.push({
@@ -81,7 +88,7 @@ function Home(props) {
         launch_success: searchParams.get("launch_success"),
         land_success: item,
       };
-      getFilterData(params, setstate);
+      getFilterData(params, updateState);
     }
   };
 
@@ -120,7 +127,12 @@ function Home(props) {
                   : "";
             }
             return (
-              <button key={item} value={item} className={addClass} id={`${item}${filterName}`}>
+              <button
+                key={item}
+                value={item}
+                className={addClass}
+                id={`${item}${filterName}`}
+              >
                 {item}
               </button>
             );
@@ -195,6 +207,13 @@ function Home(props) {
 
   return (
     <div className="container">
+      {isLoading ? (
+        <div className="loader">
+          Loading<span className="loader__dot">.</span>
+          <span className="loader__dot">.</span>
+          <span className="loader__dot">.</span>
+        </div>
+      ) : null}
       <h1 className="container__header">SpaceX Launch Programs</h1>
       <div className="container__programs">
         <div className="container__programs--filters">
