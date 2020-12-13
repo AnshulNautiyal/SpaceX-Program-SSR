@@ -94,8 +94,12 @@ body {
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            &:hover {
-                background-color: #79ac28;
+            // &:hover {
+            //     background-color: #79ac28;
+            // }
+            // Below media query add hover effect to devices  that have pointer facility like mouse 
+            @media (hover: hover) and (pointer: fine) {
+              &:hover { background-color: #79ac28; }
             }
           }
           .filterSelected {
