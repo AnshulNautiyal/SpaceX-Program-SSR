@@ -1,9 +1,9 @@
-import axios from "axios";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router";
+import queryString from "query-string";
 import "lazysizes";
 import "./Home.scss";
-import queryString from "query-string";
+import getFilterData from "./api-call";
 
 function Home(props) {
   const { data = [] } = props;
@@ -15,80 +15,43 @@ function Home(props) {
 
     if (filterName === "Launch Year") {
       searchParams.set("launch_year", item);
-      //   props.history.push(`?launch_year=${item}`);
       props.history.push({
         pathname: pathname,
         search: searchParams.toString(),
       });
-
-      axios
-        .get(`/`, {
-          params: {
-            launch_year: item,
-            launch_success: searchParams.get('launch_success'),
-            land_success: searchParams.get('land_success'),
-          },
-          headers: {'Content-Type': 'application/json'},
-          data: { }
-        })
-        .then((res) => {
-          console.log("sccess",res);
-          setstate(res.data);
-        })
-        .catch(() => {
-          console.log("fails");
-        });
+      const params = {
+        launch_year: item,
+        launch_success: searchParams.get("launch_success"),
+        land_success: searchParams.get("land_success"),
+      };
+      getFilterData(params, setstate);
     } else if (filterName === "Successful Launch") {
-      //   props.history.push(`?launch_success=${item}`);
       searchParams.set("launch_success", item === "True" ? true : false);
       props.history.push({
         pathname: pathname,
         search: searchParams.toString(),
       });
-      axios
-        .get(`/`, {
-          params: {
-            launch_year: searchParams.get('launch_year'),
-            launch_success: item,
-            land_success: searchParams.get('land_success'),
-          },
-          headers: {'Content-Type': 'application/json'},
-          data: { }
-        })
-        .then((res) => {
-          console.log("sccess",res);
-          setstate(res.data);
-        })
-        .catch(() => {
-          console.log("fail");
-        });
+      const params = {
+        launch_year: searchParams.get("launch_year"),
+        launch_success: item,
+        land_success: searchParams.get("land_success"),
+      };
+      getFilterData(params, setstate);
     } else {
-      // props.history.push(`&land_success=${item}`);
       searchParams.set("land_success", item === "True" ? true : false);
       props.history.push({
         pathname: pathname,
         search: searchParams.toString(),
       });
-      axios
-        .get(`/`, {
-          params: {
-            launch_year: searchParams.get('launch_year'),
-            launch_success: searchParams.get('launch_success'),
-            land_success: item,
-          },
-          headers: {'Content-Type': 'application/json'},
-          data: { }
-          
-        })
-        .then((res) => {
-          console.log("sccess");
-          setstate(res.data);
-        })
-        .catch(() => {
-          console.log("fail");
-        });
+      const params = {
+        launch_year: searchParams.get("launch_year"),
+        launch_success: searchParams.get("launch_success"),
+        land_success: item,
+      };
+      getFilterData(params, setstate);
     }
   };
+
   const getFilterType = (filterName = "", ...rest) => {
     let [initialValue = "", count = 0] = rest;
     let arrayItem = [];
@@ -113,9 +76,15 @@ function Home(props) {
             if (filterName === "Launch Year") {
               addClass = year === item.toString() ? "filterSelected" : "";
             } else if (filterName === "Successful Launch") {
-              addClass = launch === item.toString().toLowerCase() ? "filterSelected" : "";
+              addClass =
+                launch === item.toString().toLowerCase()
+                  ? "filterSelected"
+                  : "";
             } else {
-              addClass = landing === item.toString().toLowerCase() ? "filterSelected" : "";
+              addClass =
+                landing === item.toString().toLowerCase()
+                  ? "filterSelected"
+                  : "";
             }
             return (
               <button
@@ -131,8 +100,10 @@ function Home(props) {
       </div>
     );
   };
+
   const getLaunchRecord = () =>
-  state.length && state.map((item, index) => {
+    state.length &&
+    state.map((item, index) => {
       const {
         launch_year = "",
         mission_name = "",
@@ -191,7 +162,8 @@ function Home(props) {
       );
     });
 
-    const spaceXPrograms = getLaunchRecord();
+  const spaceXPrograms = getLaunchRecord();
+
   return (
     <div className="container">
       <h1 className="container__header">SpaceX Launch Programs</h1>
@@ -202,7 +174,9 @@ function Home(props) {
           {getFilterType("Successful Launch", ["True", "False"])}
           {getFilterType("Successful Landing", ["True", "False"])}
         </div>
-        <div className="container__programs--name">{spaceXPrograms ? spaceXPrograms : 'Data Not Available'}</div>
+        <div className="container__programs--name">
+          {spaceXPrograms ? spaceXPrograms : "Data Not Available"}
+        </div>
       </div>
       <h1 className="developBy">
         Developed By:{" "}
