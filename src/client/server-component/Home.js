@@ -12,9 +12,40 @@ function Home(props) {
   const applyFilter = (filterName) => (event) => {
     let searchParams = new URLSearchParams(location.search);
     let pathname = location.pathname;
-    const { value:item = '' } = event.target;
-    if(!item) return;
+    const { value: item = "" } = event.target;
+    // EDGECASE: If parent div clicked ignore the click functionality
+    if (!item) return;
+    // EDGECASE: if same year clicked twice
+    const yearTwiceClick = searchParams.get("launch_year", item);
+    const launchTwiceClick = searchParams.get("launch_success", item);
+    const landTwiceClick = searchParams.get("land_success", item);
+    
+    if (
+      item === yearTwiceClick ||
+      (item.toLowerCase() === launchTwiceClick &&
+        filterName === "Successful Launch") ||
+      (item.toLowerCase() === landTwiceClick &&
+        filterName === "Successful Landing")
+    ) {
+      const filterButton = document.getElementById(`${item}${filterName}`);
+      filterButton.classList.remove("filterSelected");
+      
+      if(filterName === "Successful Launch") searchParams.delete('launch_success');
+      else  if(filterName === "Successful Landing") searchParams.delete('land_success');
+      else searchParams.delete('launch_year');
 
+      history.replaceState(null, '', '?' + searchParams + location.hash);
+
+      const params = {
+        launch_year: searchParams.get("launch_year"),
+        launch_success: searchParams.get("launch_success"),
+        land_success: searchParams.get("land_success"),
+      };
+
+      getFilterData(params, setstate);
+      return;
+    }
+    // NOTE: Happy Path - filter is selected
     if (filterName === "Launch Year") {
       searchParams.set("launch_year", item);
       props.history.push({
@@ -89,11 +120,7 @@ function Home(props) {
                   : "";
             }
             return (
-              <button
-                key={item}
-                value={item}
-                className={addClass}
-              >
+              <button key={item} value={item} className={addClass} id={`${item}${filterName}`}>
                 {item}
               </button>
             );
