@@ -209,6 +209,7 @@ function Home(props) {
     });
 
   const spaceXPrograms = getLaunchRecord();
+  console.log(spaceXPrograms)
 
   return (
     <div className="container">
@@ -228,7 +229,7 @@ function Home(props) {
           {getFilterType("Successful Landing", ["True", "False"])}
         </div>
         <div className="container__programs--name">
-          {spaceXPrograms ? spaceXPrograms : "Data Not Available"}
+          {spaceXPrograms.length ? spaceXPrograms : "Data Not Available"}
         </div>
       </div>
       <h1 className="developBy">
