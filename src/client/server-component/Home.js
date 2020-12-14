@@ -53,6 +53,9 @@ function Home(props) {
 
       getFilterData(params, updateState);
       return;
+    }else {
+      const filterButton = document.getElementById(`${item}${filterName}`);
+      filterButton.classList.add("filterSelected");
     }
     // NOTE: Happy Path - filter is selected
     if (filterName === "Launch Year") {
