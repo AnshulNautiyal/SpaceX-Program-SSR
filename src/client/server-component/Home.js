@@ -209,7 +209,6 @@ function Home(props) {
     });
 
   const spaceXPrograms = getLaunchRecord();
-  console.log(spaceXPrograms)
 
   return (
     <div className="container">
